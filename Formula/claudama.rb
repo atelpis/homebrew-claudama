@@ -27,6 +27,10 @@ class Claudama < Formula
   service do
     run [opt_bin/"claudama"]
     keep_alive true
+
+    # Ensures the service can look inside Homebrew bins, system bins, and common user paths
+    environment_variables PATH: std_service_path_env + ":/usr/local/bin:/opt/homebrew/bin:~/.local/bin"
+
     log_path var/"log/claudama.log"
     error_log_path var/"log/claudama.log"
   end
