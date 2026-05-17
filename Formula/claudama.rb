@@ -1,8 +1,8 @@
 class Claudama < Formula
   desc "Ollama-API-compatible server backed by the Claude Code CLI"
   homepage "https://github.com/atelpis/claudama"
-  url "https://github.com/atelpis/claudama/archive/refs/tags/v0.1.1.tar.gz"
-  sha256 "4ee174de0a7d51beafea7d8b2437002774a671e79758f1ffb6f7e5213ea4f03b"
+  url "https://github.com/atelpis/claudama/archive/refs/tags/v0.1.2.tar.gz"
+  sha256 "f888c374fc3f3f64182954279751519233bc1ba5b3f631d6dad22f8832d494aa"
   license "MIT"
   head "https://github.com/atelpis/claudama.git", branch: "main"
 
