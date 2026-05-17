@@ -1,28 +1,28 @@
 class Claudama < Formula
   desc "Ollama-API-compatible server backed by the Claude Code CLI"
   homepage "https://github.com/atelpis/claudama"
-  version "0.1.4"
+  version "0.1.5"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/atelpis/claudama/releases/download/v0.1.4/claudama_0.1.4_darwin_arm64.tar.gz"
-      sha256 "e6d09b79d0ece83033ded9a89cdd9d4c7c1247fb6a8e6be786b857dc66ebdc2e"
+      url "https://github.com/atelpis/claudama/releases/download/v0.1.5/claudama_0.1.5_darwin_arm64.tar.gz"
+      sha256 "168dc297e0b4bb8ba4570b7eebfe24ae525114dfe3ffd8986673a5f01386c47b"
     end
     on_intel do
-      url "https://github.com/atelpis/claudama/releases/download/v0.1.4/claudama_0.1.4_darwin_amd64.tar.gz"
-      sha256 "092787a3bd3d9640d2665cc4064fe8fadd91a8beeb34c50cf1684e64ec9a4647"
+      url "https://github.com/atelpis/claudama/releases/download/v0.1.5/claudama_0.1.5_darwin_amd64.tar.gz"
+      sha256 "e328f84dd8d630d7c034dbe1f2126b524d47f89f08958efd22e27d3fbae03dc6"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/atelpis/claudama/releases/download/v0.1.4/claudama_0.1.4_linux_arm64.tar.gz"
-      sha256 "3eafabe33c3c3ff8b9188752a12c0dde0335b73abe191862399a46e8a1f5a1b8"
+      url "https://github.com/atelpis/claudama/releases/download/v0.1.5/claudama_0.1.5_linux_arm64.tar.gz"
+      sha256 "d0a45b7db7acf5a09c076a1b7afefefad1b2f19cac9be7e9cee1aaedc5048104"
     end
     on_intel do
-      url "https://github.com/atelpis/claudama/releases/download/v0.1.4/claudama_0.1.4_linux_amd64.tar.gz"
-      sha256 "9e421db05a36947163a88a138365437dae3c6d44c8b6c0878a8568528783142f"
+      url "https://github.com/atelpis/claudama/releases/download/v0.1.5/claudama_0.1.5_linux_amd64.tar.gz"
+      sha256 "4de6ef7552444c178429b83bc33b55dc8f37bfe60e5f1aa0ed9c2b5c58b9adac"
     end
   end
 
