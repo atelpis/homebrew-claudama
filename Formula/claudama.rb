@@ -21,16 +21,17 @@ class Claudama < Formula
     conf.write <<~TOML unless conf.exist?
       # claudama config — uncomment to override defaults.
       # port = 11434
+
+      # Absolute path to the `claude` binary. Leave unset to resolve via $PATH.
+      # Required when running under `brew services`, since launchd does not
+      # inherit your shell's PATH. Find yours with `which claude`.
+      # claude_path = "/usr/local/bin/claude"
     TOML
   end
 
   service do
     run [opt_bin/"claudama"]
     keep_alive true
-
-    # Ensures the service can look inside Homebrew bins, system bins, and common user paths
-    environment_variables PATH: std_service_path_env + ":/usr/local/bin:/opt/homebrew/bin:~/.local/bin"
-
     log_path var/"log/claudama.log"
     error_log_path var/"log/claudama.log"
   end
@@ -38,8 +39,13 @@ class Claudama < Formula
   def caveats
     <<~EOS
       claudama forwards chat requests to the Claude Code CLI. Install it
-      (see https://docs.claude.com/en/docs/claude-code) and make sure
-      `claude` is on PATH.
+      (see https://docs.claude.com/en/docs/claude-code).
+
+      If running under `brew services`, set the absolute path to `claude`
+      in conf.toml — launchd does not inherit your shell's PATH:
+        claude_path = "$(which claude)"
+      (Find your path with `which claude` in a normal terminal, then paste
+      it into #{etc}/claudama/conf.toml or ~/.config/claudama/conf.toml.)
 
       Default port is 11434 (Ollama's default) so existing clients work
       unchanged. If Ollama is already running on this machine, claudama
