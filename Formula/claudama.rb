@@ -35,15 +35,23 @@ class Claudama < Formula
     <<~EOS
       claudama forwards chat requests to the Claude Code CLI. Install it
       (see https://docs.claude.com/en/docs/claude-code) and make sure
-      `claude` is on PATH. The server starts without it, but requests
-      will fail until it's available.
+      `claude` is on PATH.
 
-      Per-user config (takes precedence over #{etc}/claudama/conf.toml):
+      Default port is 11434 (Ollama's default) so existing clients work
+      unchanged. If Ollama is already running on this machine, claudama
+      will fail to bind — pick another port:
         mkdir -p ~/.config/claudama
         echo 'port = 11436' > ~/.config/claudama/conf.toml
+        brew services restart claudama
+
+      Per-user config (takes precedence over #{etc}/claudama/conf.toml):
+        ~/.config/claudama/conf.toml
 
       Run as a background service:
         brew services start claudama
+
+      Logs:
+        #{var}/log/claudama.log
     EOS
   end
 
