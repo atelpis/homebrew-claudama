@@ -1,20 +1,33 @@
 class Claudama < Formula
   desc "Ollama-API-compatible server backed by the Claude Code CLI"
   homepage "https://github.com/atelpis/claudama"
-  url "https://github.com/atelpis/claudama/archive/refs/tags/v0.1.3.tar.gz"
-  sha256 "fcded0ad737222d3040d65d498d6f0e39b7ad85cfaf2d4bc186d753caf154ca8"
+  version "0.1.4"
   license "MIT"
-  head "https://github.com/atelpis/claudama.git", branch: "main"
 
-  depends_on "go" => :build
+  on_macos do
+    on_arm do
+      url "https://github.com/atelpis/claudama/releases/download/v0.1.4/claudama_0.1.4_darwin_arm64.tar.gz"
+      sha256 "e6d09b79d0ece83033ded9a89cdd9d4c7c1247fb6a8e6be786b857dc66ebdc2e"
+    end
+    on_intel do
+      url "https://github.com/atelpis/claudama/releases/download/v0.1.4/claudama_0.1.4_darwin_amd64.tar.gz"
+      sha256 "092787a3bd3d9640d2665cc4064fe8fadd91a8beeb34c50cf1684e64ec9a4647"
+    end
+  end
+
+  on_linux do
+    on_arm do
+      url "https://github.com/atelpis/claudama/releases/download/v0.1.4/claudama_0.1.4_linux_arm64.tar.gz"
+      sha256 "3eafabe33c3c3ff8b9188752a12c0dde0335b73abe191862399a46e8a1f5a1b8"
+    end
+    on_intel do
+      url "https://github.com/atelpis/claudama/releases/download/v0.1.4/claudama_0.1.4_linux_amd64.tar.gz"
+      sha256 "9e421db05a36947163a88a138365437dae3c6d44c8b6c0878a8568528783142f"
+    end
+  end
 
   def install
-    ldflags = %W[
-      -s -w
-      -X main.version=#{version}
-      -X main.etcConfigDir=#{etc}/claudama
-    ]
-    system "go", "build", *std_go_args(ldflags: ldflags.join(" ")), "./cmd/claudama"
+    bin.install "claudama"
 
     (etc/"claudama").mkpath
     conf = etc/"claudama/conf.toml"
@@ -22,10 +35,11 @@ class Claudama < Formula
       # claudama config — uncomment to override defaults.
       # port = 11434
 
-      # Absolute path to the `claude` binary. Leave unset to resolve via $PATH.
-      # Required when running under `brew services`, since launchd does not
-      # inherit your shell's PATH. Find yours with `which claude`.
-      # claude_path = "/usr/local/bin/claude"
+      # Absolute path to the `claude` binary. Leave unset to auto-discover via
+      # $PATH or well-known install locations (covers Homebrew, npm-global,
+      # bun). Set this explicitly only if `claude` lives somewhere unusual
+      # (e.g. nvm version dir, volta, custom npm prefix).
+      # claude_path = "/Users/you/.nvm/versions/node/v22.0.0/bin/claude"
     TOML
   end
 
@@ -39,13 +53,9 @@ class Claudama < Formula
   def caveats
     <<~EOS
       claudama forwards chat requests to the Claude Code CLI. Install it
-      (see https://docs.claude.com/en/docs/claude-code).
-
-      If running under `brew services`, set the absolute path to `claude`
-      in conf.toml — launchd does not inherit your shell's PATH:
-        claude_path = "$(which claude)"
-      (Find your path with `which claude` in a normal terminal, then paste
-      it into #{etc}/claudama/conf.toml or ~/.config/claudama/conf.toml.)
+      (see https://docs.claude.com/en/docs/claude-code). claudama
+      auto-discovers `claude` in standard locations; if you use nvm, volta,
+      or a custom npm prefix, set `claude_path` in conf.toml.
 
       Default port is 11434 (Ollama's default) so existing clients work
       unchanged. If Ollama is already running on this machine, claudama
