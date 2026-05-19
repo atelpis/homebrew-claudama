@@ -33,7 +33,7 @@ class Claudama < Formula
     conf = etc/"claudama/conf.toml"
     conf.write <<~TOML unless conf.exist?
       # claudama config — uncomment to override defaults.
-      # port = 11434
+      # port = 11435
 
       # Absolute path to the `claude` binary. Leave unset to auto-discover via
       # $PATH or well-known install locations (covers Homebrew, npm-global,
@@ -57,9 +57,13 @@ class Claudama < Formula
       auto-discovers `claude` in standard locations; if you use nvm, volta,
       or a custom npm prefix, set `claude_path` in conf.toml.
 
-      Default port is 11434 (Ollama's default) so existing clients work
-      unchanged. If Ollama is already running on this machine, claudama
-      will fail to bind — pick another port:
+      Default port is 11435 so claudama can coexist with Ollama (11434)
+      on the same machine — Raycast requires the Ollama app to be
+      installed for its AI-provider slot to appear, even when you point
+      it at claudama. In Raycast: Settings → AI → Ollama, set host to
+      http://127.0.0.1:11435 and click Sync Models.
+
+      To use a different port:
         mkdir -p ~/.config/claudama
         echo 'port = 11436' > ~/.config/claudama/conf.toml
         brew services restart claudama
